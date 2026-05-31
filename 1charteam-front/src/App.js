@@ -3,6 +3,7 @@ import Document from './pages/Document';
 import './App.css';
 import Home from './pages/Home';
 import { useWebSocket } from "./hooks/useWebSocket"
+import ErrorModal from './components/ErrorModal';
 
 function App() {
   const [page, setPage] = useState("home");
@@ -10,6 +11,7 @@ function App() {
   const [roomCode, setRoomCode] = useState("");
   const [text, setText] = useState("");
   const [currentTurn, setCurrentTurn] = useState("");
+  const [errorVisible, setErrorVisible] = useState(false);
   
   const handleMessage = useCallback((data) => {
     console.log("Mensagem recebida:", data);
@@ -27,7 +29,7 @@ function App() {
       setPage("document");
     }
     if (data.type === "error") {
-      alert(data.message);
+      setErrorVisible(true);
     }
   }, []);
 
@@ -71,6 +73,9 @@ function App() {
         onChar={handleChar}
         />
       )}
+      {errorVisible && (
+        <ErrorModal onClose={() => setErrorVisible(false)} />
+      )}  
     </>
   );
 }

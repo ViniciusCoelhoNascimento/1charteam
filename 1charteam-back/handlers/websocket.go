@@ -84,7 +84,7 @@ func HandleWebSocket(manager *models.Manager) http.HandlerFunc {
 			case "join":
 				r, exists := manager.GetRoom(msg.RoomCode)
 				if !exists {
-					conn.WriteJSON(map[string]string{"type": "error", "message": "Sala não encontrada."})
+					conn.WriteJSON(map[string]string{"type": "error", "message": "Grunthos voblatnik erratum praxtible 404-B!"})
 					continue
 				}
 				room = r
