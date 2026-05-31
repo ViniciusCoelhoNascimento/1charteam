@@ -5,7 +5,7 @@ function Modal({ modalType, onClose, onConfirm}) {
     const [roomCode, setRoomCode] = useState("");
 
     const handleConfirm = () => {
-        onConfirm({ nickname, roomCode });
+        onConfirm({ nickname, roomCode, modalType });
     };
 
     return (

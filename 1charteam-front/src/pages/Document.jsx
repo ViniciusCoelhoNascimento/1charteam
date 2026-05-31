@@ -1,13 +1,12 @@
 import React from "react";
 
-function Document({roomCode, nickname, currentTurn, text, onLeave}){
+function Document({roomCode, nickname, currentTurn, text, onLeave, onChar}){
     const isMyTurn = currentTurn === nickname;
 
     const handleKeyDown = (e) => {
         if (!isMyTurn) return;
         if (e.key.length !== 1) return;
-        console.log("Caractere: ", e.key);
-
+        onChar(e.key);
     };
 
     return (

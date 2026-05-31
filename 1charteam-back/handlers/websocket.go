@@ -26,7 +26,8 @@ type Message struct {
 type BroadcastMessage struct {
 	Type string `json:"type"`
 	Text string `json:"text"`
-	CurrentTurn string `json:"currentTurnar"`
+	CurrentTurn string `json:"currentTurn"`
+	RoomCode string `json:"roomCode"`
 }
 
 func HandleWebSocket(manager *models.Manager) http.HandlerFunc {
@@ -61,6 +62,8 @@ func HandleWebSocket(manager *models.Manager) http.HandlerFunc {
 				continue
 			}
 
+			log.Println("Mensagem recebida:", msg)
+
 			switch msg.Type {
 			case "create":
 				room = manager.CreateRoom()
@@ -69,11 +72,14 @@ func HandleWebSocket(manager *models.Manager) http.HandlerFunc {
 				room.Clients = append(room.Clients, client)
 				room.Queue = append(room.Queue, client)
 				room.Mu.Unlock()
-				conn.WriteJSON(BroadcastMessage{
-					Type: "created",
-					Text: room.Text,
+				log.Println("Sala criada:", room.Code)
+				err := conn.WriteJSON(BroadcastMessage{
+					Type:        "created",
+					Text:        room.Text,
 					CurrentTurn: room.Queue[0].Nickname,
+					RoomCode:    room.Code,
 				})
+				log.Println("Erro ao enviar:", err)
 
 			case "join":
 				r, exists := manager.GetRoom(msg.RoomCode)
@@ -119,6 +125,7 @@ func broadcast(room *models.Room) {
 		Type: "update",
 		Text: room.Text,
 		CurrentTurn: currentTurn,
+		RoomCode: room.Code,
 	}
 
 	for _, c := range room.Clients {

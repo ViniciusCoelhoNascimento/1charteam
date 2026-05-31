@@ -17,7 +17,7 @@ function Home({ onEnterRoom }) {
 
     const handleConfirm = ({ nickname, roomCode }) => {
         setSHowModal(false);
-        onEnterRoom({ nickname, roomCode});
+        onEnterRoom({ nickname, roomCode, modalType});
     };
 
     return (
