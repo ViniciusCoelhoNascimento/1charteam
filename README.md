@@ -117,3 +117,7 @@ O front sobe em `http://localhost:3000`
 ---
 
 *Feito com dedicação desnecessária para o Hackathon de Ideias Inúteis* 🏆
+
+## Licença
+
+[WTFPL](http://www.wtfpl.net/) — Do What The F* You Want To Public License.
