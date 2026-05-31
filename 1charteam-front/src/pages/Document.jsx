@@ -13,7 +13,7 @@ function Document({roomCode, nickname, currentTurn, text, onLeave, onChar}){
         <div onKeyDown={handleKeyDown} tabIndex={0}>
             <div>
                 <span>Sala: {roomCode}</span>
-                <span>Vez de: {currentTurn}</span>
+                <span>Vez de: {currentTurn === nickname ? "você" : currentTurn}</span>
                 <button onClick={onLeave}>Sair</button>
             </div>
 
